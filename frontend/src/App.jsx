@@ -13,10 +13,13 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import { Toaster } from "react-hot-toast";
 import useAuthUser from "./hooks/useAuthUser.js";
 import PageLoader from "./components/PageLoader.jsx";
+import { useThemeStore } from "./store/useThemeStore.js";
+import { Layout } from "lucide-react";
 
 const App = () => {
 
   const { isLoading, authUser } = useAuthUser();
+  const { theme } = useThemeStore();
 
   const isAuthenticated = Boolean(authUser);
   const isOnboarded = authUser?.isOnboarded;
@@ -24,7 +27,7 @@ const App = () => {
   if (isLoading) return <PageLoader />
 
   return (
-    <div className="h-screen" data-theme="night">
+    <div className="h-screen" data-theme={theme}>
 
       <Routes>
         <Route path="/" element={
