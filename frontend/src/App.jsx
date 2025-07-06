@@ -6,7 +6,7 @@ import HomePage from "./pages/HomePage.jsx";
 import CallPage from "./pages/CallPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
-import NotificationPage from "./pages/NotificationPage.jsx";
+import NotificationPage from "./pages/NotificationsPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 
@@ -55,8 +55,20 @@ const App = () => {
         />
 
         <Route path="/call" element={isAuthenticated ? <CallPage /> : <Navigate to="/login" />} />
-        <Route path="/chat" element={isAuthenticated ? <ChatPage /> : <Navigate to="/login" />} />
-        
+       
+        <Route
+          path="/chat/:id"
+          element={
+            isAuthenticated && isOnboarded ? (
+              <Layout showSidebar={false}>
+                <ChatPage />
+              </Layout>
+            ) : (
+              <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
+            )
+          }
+        />
+       
         <Route
           path="/notification"
           element={
