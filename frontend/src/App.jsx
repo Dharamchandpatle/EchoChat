@@ -11,7 +11,7 @@ import OnboardingPage from "./pages/OnboardingPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 
 import { Toaster } from "react-hot-toast";
-import useAuthUser from "./hooks/useAuthUser.jsx";
+import useAuthUser from "./hooks/useAuthUser.js";
 import PageLoader from "./components/PageLoader.jsx";
 
 const App = () => {
@@ -46,7 +46,7 @@ const App = () => {
           element={
             !isAuthenticated ? <LoginPage /> : <Navigate to={isOnboarded ? "/" : "/onboarding"} />}
         />
-        
+
         <Route path="/call" element={isAuthenticated ? <CallPage /> : <Navigate to="/login" />} />
         <Route path="/chat" element={isAuthenticated ? <ChatPage /> : <Navigate to="/login" />} />
         <Route path="/notification" element={isAuthenticated ? <NotificationPage /> : <Navigate to="/login" />} />
