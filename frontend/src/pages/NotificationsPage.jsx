@@ -6,20 +6,20 @@ import NoNotificationsFound from "../components/NoNotificationsFound";
 const NotificationsPage = () => {
   const queryClient = useQueryClient();
 
-  const { data: friendRequests , isLoading } = useQuery({
-    queryKey : ["friendRequests"],
-    queryFn: getFriendRequests ,
+  const { data: friendRequests, isLoading } = useQuery({
+    queryKey: ["friendRequests"],
+    queryFn: getFriendRequests,
   });
 
-  const { mutate : acceptRequestMutation , isPending } = useMutation({
-    mutationFn : acceptRequestMutation ,
-    onSuccess : ()=>{
-      queryClient.invalidateQueries({ queryKey: ["friendRequests"]});
-      queryClient.cancelQueries({ queryKey : ["friends"]});
+  const { mutate: acceptRequestMutation, isPending } = useMutation({
+    mutationFn: acceptFriendRequest,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["friendRequests"] });
+      queryClient.invalidateQueries({ queryKey: ["friends"] });
     },
   });
 
-  const incomingRequests = friendRequests?.incomingRequests || [];
+  const incomingRequests = friendRequests?.incomingReqs || [];
   const acceptedRequests = friendRequests?.acceptedReqs || [];
 
   return (

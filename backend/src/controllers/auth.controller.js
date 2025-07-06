@@ -100,13 +100,9 @@ export function logout(req, res) {
   res.clearCookie("jwt");
   res.status(200).json({ success: true, message: "Logout successful" });
 }
+
 export async function onboard(req, res) {
   try {
-    if (!req.user) {
-      console.error("Onboarding error: req.user is undefined. Auth middleware might be missing or failing.");
-      return res.status(401).json({ message: "Unauthorized: User not authenticated" });
-    }
-
     const userId = req.user._id;
 
     const { fullName, bio, nativeLanguage, learningLanguage, location } = req.body;
@@ -126,13 +122,14 @@ export async function onboard(req, res) {
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
-      { ...req.body, isOnboarded: true },
+      {
+        ...req.body,
+        isOnboarded: true,
+      },
       { new: true }
     );
 
-    if (!updatedUser) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    if (!updatedUser) return res.status(404).json({ message: "User not found" });
 
     try {
       await upsertStreamUser({
