@@ -24,12 +24,16 @@ const App = () => {
   if (isLoading) return <PageLoader />
 
   return (
-    <div className="h-screen" data-theme="dark">
+    <div className="h-screen" data-theme="night">
 
       <Routes>
         <Route path="/" element={
           isAuthenticated && isOnboarded ? (
-            <HomePage />
+            <Layout showSidebar ={true} >
+              <HomePage />
+            </Layout>
+
+
           ) : (
             <Navigate to={!isAuthenticated ? "/login" : "/onboarding"} />
           )}
